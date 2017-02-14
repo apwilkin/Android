@@ -1,23 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
-   <!-- <fragment android:name="com.example.android.fragments.HeadlinesFragment"
+    <!--<fragment android:name="com.example.soundapplication.HeadlinesFragment"
         android:id="@+id/headlines_fragment"
         android:layout_weight="1"
         android:layout_width="0dp"
-        android:layout_height="match_parent"-->
-    <EditText android:id="@+id/edit_message"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/edit_message" />
+        android:layout_height="match_parent" />-->
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_send"
-        android:onClick="sendMessage" />
-</LinearLayout>
+        android:onClick="sendMessage"
+        android:id="@+id/button"
+        android:elevation="0dp"
+        android:layout_marginBottom="52dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:hint="@string/edit_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_message"
+        android:layout_above="@+id/button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="38dp" />
+
+    <Button
+        android:text="Record Audio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="82dp"
+        android:id="@+id/button_record_audio"
+        android:layout_alignParentTop="true"
+        android:onClick="recordAudio"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="View Audio Files"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="73dp"
+        android:id="@+id/view_audio_button"
+        android:layout_above="@+id/edit_message"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
