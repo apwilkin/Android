@@ -44,6 +44,7 @@ public class RecordAudioActivity extends AppCompatActivity {
     private PlayButton   mPlayButton = null;
     private MediaPlayer   mPlayer = null;
 
+
     // Requesting permission to RECORD_AUDIO
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
@@ -161,16 +162,27 @@ public class RecordAudioActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record_audio);
 
-        Intent intent = getIntent();
-        TextView textView = new TextView(this);
-        textView.setTextSize(40);
-        textView.setText("Audio Recording Menu");
-        textView.setGravity(Gravity.TOP);
+        int textid = 1, recordid = 2, playid = 3;
 
-        ViewGroup layout = (ViewGroup) findViewById(R.id.activity_record_audio);
-        layout.addView(textView);
+        //Main Layout Setup
+        RelativeLayout mainLayout = new RelativeLayout(this);
+        RelativeLayout.LayoutParams mainDimensions = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT);
+        mainLayout.setLayoutParams(mainDimensions);
+
+        //Header Setup
+        TextView header = new TextView(this);
+        header.setTextSize(40);
+        header.setText("Audio Recording Menu");
+        header.setGravity(Gravity.CENTER);
+        header.setId(textid);
+        RelativeLayout.LayoutParams messageDimensions = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        messageDimensions.addRule(RelativeLayout.ALIGN_TOP);
+        header.setLayoutParams(messageDimensions);
 
 
         // Record to the external cache directory for visibility
@@ -179,31 +191,33 @@ public class RecordAudioActivity extends AppCompatActivity {
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
+        //Record button setup
         mRecordButton = new RecordButton(this);
+        mRecordButton.setId(recordid);
 
-        /*RelativeLayout.LayoutParams recordButtonLayout = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        recordButtonLayout.addRule(RelativeLayout.BELOW, textView.getId());
-        mRecordButton.setLayoutParams(recordButtonLayout);*/
+        RelativeLayout.LayoutParams recordDimensions = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        recordDimensions.addRule(RelativeLayout.BELOW, header.getId());
+        recordDimensions.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        mRecordButton.setLayoutParams(recordDimensions);
 
-        layout.addView(mRecordButton,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
+        //Play button setup
         mPlayButton = new PlayButton(this);
+        mPlayButton.setId(playid);
 
-        /*RelativeLayout.LayoutParams playButtonLayout = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        playButtonLayout.addRule(RelativeLayout.BELOW, mRecordButton.getId());
-        mPlayButton.setLayoutParams(playButtonLayout);*/
+        RelativeLayout.LayoutParams playDimensions = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        playDimensions.addRule(RelativeLayout.BELOW, mRecordButton.getId());
+        playDimensions.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        mPlayButton.setLayoutParams(playDimensions);
 
-        layout.addView(mPlayButton,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
-        setContentView(layout);
+        //Adding text and buttons to main layout
+        mainLayout.addView(header);
+        mainLayout.addView(mRecordButton);
+        mainLayout.addView(mPlayButton);
+        setContentView(mainLayout);
     }
     @Override
     public void onStop() {
